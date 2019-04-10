@@ -1,0 +1,26 @@
+
+#display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.charBtn {
+  margin: 0.2em;
+  padding: 0.2em;
+  border: 1px solid #28c;
+  border-radius: 0.2em;
+  box-shadow: 1px 1px 2px #159;
+  font-size: 1em;
+  cursor: pointer;
+}
+.charBtn:hover {
+  box-shadow: 2px 2px 2px #159;
+}
+.charBtn:active {
+  box-shadow: 0 0 0;
+}
+
+.char {
+  font-size: 2em;
+}

@@ -1,0 +1,23 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Calibri, Ubuntu, sans-serif;
+  color: #444;
+}
+
+#mainContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #fd5;
+  padding: 1em;
+}
+
+#display {
+  padding: 3em;
+}
