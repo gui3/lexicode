@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Lexi-code</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/chars.css">
+  </head>
+
+  <body>
+    <div id="mainContainer">
+      <header>
+        <nav>
+          <h1>Welcome to LEXI-CODE</h1>
+          <p>where you find ALL unicode characters 😱</p>
+          <!-- <input type="text" id="searchInput" value="0">
+          <button id= "searchButton"></button> -->
+          <p>Load by code, from
+          <input type="text" id="loadInput" value="0">
+          to <span id="loadMax">0</span>
+          <button id= "loadButton">Load</button></p>
+
+          <form id="search" action="">
+            <input id="searchInput" autocomplete="off" placeholder="search unicode"/>
+            <button>Search Unicode</button>
+            <input id="searchAuto" name="searchAuto" type="checkbox" checked/>
+            <label for="searchAuto">auto?</label>
+          </form>
+        </nav>
+        <a href="https://dmitripavlutin.com/what-every-javascript-developer-should-know-about-unicode/">
+        a very worthy lecture about unicode</a>
+      </header>
+
+      <div id="display">
+
+      </div>
+
+    </div>
+
+  </body>
+
+    <script type="text/javascript" src="./js/lexicode.js"></script>
+    <script type="text/javascript" src="./js/UnicodeCard.js"></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+(function () {
+  var socket = io()
+
+  const search = document.getElementById('search')
+  const searchInput = document.getElementById('searchInput')
+  const searchAuto = document.getElementById('searchAuto')
+  const display = document.getElementById('display')
+
+  search // manual search
+    .addEventListener("submit", (e) => {
+      e.preventDefault()
+      socket.emit('search', searchInput.value)
+    })
+
+  searchInput // autosearch
+    .addEventListener("keyup", (e) => {
+      if (searchAuto.checked === true) {
+        const domEvent = document.createEvent('Event')
+        domEvent.initEvent('submit', false, true)
+        e.target.closest('form').dispatchEvent(domEvent)
+      }
+    })
+
+  socket.on('found', function(data){
+    data.forEach(rawUnicode => {
+      let uchar = new lexicode.UnicodeChar(rawUnicode.code)
+      let ucard = new UnicodeCard(uchar)
+      display.appendChild(ucard.renderSmall())
+    })
+  })
+})()
+  </script>
+</html>
